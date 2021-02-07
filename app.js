@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const { createDbPool } = require('./common/db');
 const createError = require('http-errors');
 const express = require('express');
