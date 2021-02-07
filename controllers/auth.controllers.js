@@ -7,8 +7,8 @@ module.exports = {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  // Login user
-  const token = jwt.sign({ username: email }, process.env.JWT_SECRET, {
+  // Verify user in DB, get user's user ID and sign it in jwt
+  const token = jwt.sign({ userId: '' }, process.env.JWT_SECRET, {
     expiresIn: 60*60*24 // expire in a day
   });
 }

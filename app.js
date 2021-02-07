@@ -1,10 +1,14 @@
 require('dotenv').config();
+const { createDbPool } = require('./common/db');
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
+
+createDbPool();
 
 const app = express();
 
@@ -44,7 +48,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/api/user', );
+app.use('/api/user', userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
