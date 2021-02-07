@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
       });
     }
     const token = bearerToken.substr(7);
-    jwt.verify(token, jwtSecret, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         return res.status(401).send({
           data: {},
@@ -43,7 +44,7 @@ app.use((req, res, next) => {
   }
 });
 
-// app.use('/api/user', );
+app.use('/api/user', );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
