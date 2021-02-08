@@ -2,14 +2,15 @@ const { getPromiseQuery } = require("../common/db");
 
 module.exports = {
   add,
-  get
+  getById,
+  getByEmail
 };
 
-async function add() {
+async function add({ userId, name, email, password, subscription }) {
   try {
     const query = `INSERT into user values ?`;
     const values = [
-      []
+      [userId, name, email, password, subscription]
     ];
     await getPromiseQuery()(query, [values]);
     return;
@@ -19,11 +20,19 @@ async function add() {
 }
 
 
-async function get(userId) {
+async function getById(userId) {
   try {
     const query = `SELECT * from user WHERE userId=${userId}`;
-    await getPromiseQuery()(query);
-    return;
+    return await getPromiseQuery()(query);
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function getByEmail(email) {
+  try {
+    const query = `SELECT * from user WHERE email="${email}"`;
+    return await getPromiseQuery()(query);
   } catch (e) {
     throw e;
   }
