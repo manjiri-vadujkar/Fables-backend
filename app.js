@@ -1,5 +1,6 @@
 require('dotenv').config();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const { createDbPool } = require('./common/db');
 const createError = require('http-errors');
 const express = require('express');
@@ -23,29 +24,29 @@ app.use(cors());
 
 app.use('/api/auth', authRoutes);
 
-app.use((req, res, next) => {
-  if (req.method !== 'OPTIONS') {
-    const bearerToken = req.headers.authorization;
-    if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
-      res.statusCode = 403;
-      return res.send({
-        data: {},
-        message: 'Forbidden. Please provide appropriate token via Bearer authorization'
-      });
-    }
-    const token = bearerToken.substr(7);
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-      if (err) {
-        return res.status(401).send({
+app.use(async (req, res, next) => {
+  try {
+    if (req.method !== 'OPTIONS') {
+      const bearerToken = req.headers.authorization;
+      if (!bearerToken || !bearerToken.startsWith('Bearer ')) {
+        res.statusCode = 403;
+        return res.send({
           data: {},
-          message: 'Unauthorized'
+          message: 'Forbidden. Please provide appropriate token via Bearer authorization'
         });
       }
+      const token = bearerToken.substr(7);
+      const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
       req.decodedToken = decodedToken;
       next();
+    } else {
+      next();
+    }
+  } catch (e) {
+    return res.status(401).send({
+      data: {},
+      message: 'Unauthorized'
     });
-  } else {
-    next();
   }
 });
 
