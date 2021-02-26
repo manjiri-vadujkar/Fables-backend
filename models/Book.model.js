@@ -1,7 +1,8 @@
 const { getPromiseQuery } = require('../common/db');
 
 module.exports = {
-  getAll
+  getAll,
+  get
 };
 
 async function getAll(limit = 0, genre = '') {
@@ -15,9 +16,7 @@ async function getAll(limit = 0, genre = '') {
       query += ` LIMIT ${limit}`;
     }
     const books = await getPromiseQuery()(query);
-    books.forEach(b => {
-      b.bookId = parseInt(b.bookId);
-    });
+    books.forEach(b => b.bookId = parseInt(b.bookId));
     books.sort((a, b) => a.bookId - b.bookId);
     return books;
   } catch (e) {
@@ -27,6 +26,15 @@ async function getAll(limit = 0, genre = '') {
 }
 
 async function get(bookId) {
-  const query = `SELECT book.*, GROUP_CONCAT(bookchpt.chptname) as chapters from book INNER JOIN bookchpt ON book.bookId = bookchpt.bookId GROUP BY book.bookId`;
-
+  try {
+    const query = `SELECT book.*, GROUP_CONCAT(bookchpt.chptname) as chapters from book INNER JOIN bookchpt ON book.bookId = bookchpt.bookId WHERE book.bookId=${bookId} `;
+    const books = await getPromiseQuery()(query);
+    books.forEach(b => {
+      b.bookId = parseInt(b.bookId);
+      b.chapters = b.chapters.split(',');
+    });
+    return books;
+  } catch (e) {
+    throw e;
+  }
 }

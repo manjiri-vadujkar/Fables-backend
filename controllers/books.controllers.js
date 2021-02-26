@@ -1,4 +1,4 @@
-const { getAll } = require('../models/Book.model');
+const { getAll, get } = require('../models/Book.model');
 
 module.exports = {
   getBooks,
@@ -10,9 +10,7 @@ async function getBooks(req, res) {
     const { limit, genre } = req.query;
     const books = await getAll(limit ? limit : 0, genre ? genre : '');
     return res.send({
-      data: {
-        books
-      },
+      data: books,
       message: 'Got books'
     });
   } catch (e) {
@@ -24,5 +22,17 @@ async function getBooks(req, res) {
 }
 
 async function getBook(req, res) {
-
+  try {
+    const book = await get(req.params.bookId);
+    return res.send({
+      data: book[0],
+      message: 'Got book'
+    });    
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({
+      data: {},
+      message: 'Something went wrong, please try again later'
+    });
+  }
 }
