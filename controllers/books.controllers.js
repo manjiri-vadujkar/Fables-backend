@@ -7,7 +7,8 @@ module.exports = {
 
 async function getBooks(req, res) {
   try {
-    const books = await getAll();
+    const { limit, genre } = req.query;
+    const books = await getAll(limit ? limit : 0, genre ? genre : '');
     return res.send({
       data: {
         books
