@@ -37,7 +37,6 @@ async function login(req, res) {
     });
   }
   catch (e) {
-    console.log(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
