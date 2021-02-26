@@ -9,6 +9,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const booksRoutes = require('./routes/books.routes');
 
 createDbPool();
 
@@ -51,6 +52,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api/user', userRoutes);
+app.use('/api/books', booksRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
