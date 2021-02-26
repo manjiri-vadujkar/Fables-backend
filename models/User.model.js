@@ -22,7 +22,7 @@ async function add({ userId, name, email, password, subscription }) {
 
 async function getById(userId) {
   try {
-    const query = `SELECT * from user WHERE userId=${userId}`;
+    const query = `SELECT name, email, subscription from user WHERE userId="${userId}"`;
     return await getPromiseQuery()(query);
   } catch (e) {
     throw e;
@@ -31,7 +31,7 @@ async function getById(userId) {
 
 async function getByEmail(email) {
   try {
-    const query = `SELECT * from user WHERE email="${email}"`;
+    const query = `SELECT name, email, subscription from user WHERE email="${email}"`;
     return await getPromiseQuery()(query);
   } catch (e) {
     throw e;

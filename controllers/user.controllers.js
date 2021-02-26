@@ -1,4 +1,4 @@
-const { get } = require("../models/User.model");
+const { getById } = require("../models/User.model");
 
 module.exports = {
   getUserDetails
@@ -6,7 +6,7 @@ module.exports = {
 
 async function getUserDetails(req, res) {
   try {
-    const users = await get(req.decodedToken.userId);
+    const users = await getById(req.decodedToken.userId);
     if (!users || users.length === 0) {
       return res.status(404).send({
         data: {},
@@ -18,9 +18,10 @@ async function getUserDetails(req, res) {
       message: 'User found'
     });
   } catch (e) {
+    console.log(e);
     return res.status(500).send({
       data: {},
       message: 'Failed to get user'
-    })
+    });
   } 
 }
