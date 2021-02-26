@@ -7,7 +7,9 @@ module.exports = {
 async function getAll() {
   try {
     const query = `SELECT book.*, GROUP_CONCAT(bookchpt.chptname) as chapters from book INNER JOIN bookchpt ON book.bookId = bookchpt.bookId GROUP BY book.bookId`;
-    return await getPromiseQuery()(query);
+    const books = await getPromiseQuery()(query);
+    books.forEach(b => b.chapters = b.chapters.split(','));
+    return books;
   } catch (e) {
     throw e;
   }
