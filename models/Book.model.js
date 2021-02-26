@@ -2,7 +2,8 @@ const { getPromiseQuery } = require('../common/db');
 
 module.exports = {
   getAll,
-  get
+  get,
+  getName
 };
 
 async function getAll(limit = 0, genre = '') {
@@ -34,6 +35,16 @@ async function get(bookId) {
       b.chapters = b.chapters.split(',');
     });
     return books;
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function getName(bookId) {
+  try {
+    const query = `SELECT bookname from book WHERE bookId=${bookId}`;
+    const books = await getPromiseQuery()(query);
+    return books[0].bookname;
   } catch (e) {
     throw e;
   }
