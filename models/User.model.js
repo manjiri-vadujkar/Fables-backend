@@ -1,4 +1,4 @@
-const { getPromiseQuery } = require("../common/db");
+const { getPromiseQuery } = require('../common/db');
 
 module.exports = {
   add,
