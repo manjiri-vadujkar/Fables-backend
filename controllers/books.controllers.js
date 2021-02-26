@@ -45,12 +45,18 @@ async function getBookChapter(req, res) {
     const bookName = await getName(bookId);
     const s3Url = `${bookId}-${bookName.trim()}/${chptName}.txt`;
     const signedUrl = await getSignedUrl(s3Url);
-    const respo = await fetch(signedUrl);
-    const data = await respo.text();
+    const response = await fetch(signedUrl);
+    const data = await response.text();
+    if (response.status !== 200) {
+      return res.status(response.status).send({
+        data: {},
+        message: 'Failed to get chapter'
+      });
+    }
     return res.send({
       data,
-      message: 'Got chapter contents'
-    })
+      message: 'Got chapter'
+    });
   } catch (e) {
     return res.status(500).send({
       data: {},
