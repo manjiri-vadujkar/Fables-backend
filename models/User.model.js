@@ -31,7 +31,7 @@ async function getById(userId) {
 
 async function getByEmail(email) {
   try {
-    const query = `SELECT name, email, password from user WHERE email="${email}"`;
+    const query = `SELECT userId, name, email, password from user WHERE email="${email}"`;
     return await getPromiseQuery()(query);
   } catch (e) {
     throw e;
