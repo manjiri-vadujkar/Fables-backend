@@ -18,7 +18,6 @@ async function getUserDetails(req, res) {
       message: 'User found'
     });
   } catch (e) {
-    console.log(e);
     return res.status(500).send({
       data: {},
       message: 'Failed to get user'
