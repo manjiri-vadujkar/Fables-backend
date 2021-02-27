@@ -1,17 +1,19 @@
-const { getAll } = require('../models/Book.model');
+const fetch = require('node-fetch');
+const { getAll, get, getName } = require('../models/Book.model');
+const { getSignedUrl } = require('../common/s3');
 
 module.exports = {
   getBooks,
-  getBook
+  getBook,
+  getBookChapter
 };
 
 async function getBooks(req, res) {
   try {
-    const books = await getAll();
+    const { limit, genre } = req.query;
+    const books = await getAll(limit ? limit : 0, genre ? genre : '');
     return res.send({
-      data: {
-        books
-      },
+      data: books,
       message: 'Got books'
     });
   } catch (e) {
@@ -23,5 +25,42 @@ async function getBooks(req, res) {
 }
 
 async function getBook(req, res) {
+  try {
+    const book = await get(req.params.bookId);
+    return res.send({
+      data: book[0],
+      message: 'Got book'
+    });    
+  } catch (e) {
+    return res.status(500).send({
+      data: {},
+      message: 'Something went wrong, please try again later'
+    });
+  }
+}
 
+async function getBookChapter(req, res) {
+  try {
+    const { bookId, chptName } = req.params;
+    const bookName = await getName(bookId);
+    const s3Url = `${bookId}-${bookName.trim()}/${chptName}.txt`;
+    const signedUrl = await getSignedUrl(s3Url);
+    const response = await fetch(signedUrl);
+    const data = await response.text();
+    if (response.status !== 200) {
+      return res.status(response.status).send({
+        data: {},
+        message: 'Failed to get chapter'
+      });
+    }
+    return res.send({
+      data,
+      message: 'Got chapter'
+    });
+  } catch (e) {
+    return res.status(500).send({
+      data: {},
+      message: 'Something went wrong, please try again later'
+    });
+  }
 }
