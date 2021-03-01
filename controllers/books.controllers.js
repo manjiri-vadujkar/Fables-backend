@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const { getAll, get, getName } = require('../models/Book.model');
 const Userfav = require('../models/Userfav.model');
+const UserRead = require('../models/Userread.model');
 const { getSignedUrl } = require('../common/s3');
 
 module.exports = {
@@ -9,7 +10,9 @@ module.exports = {
   getBookChapter,
   getFavs,
   addToFav,
-  removeFromFav
+  removeFromFav,
+  getRead,
+  addToRead
 };
 
 async function getBooks(req, res) {
@@ -117,13 +120,53 @@ async function removeFromFav(req, res) {
     if (!favourite) {
       return res.status(404).send({
         data: {},
-        message: 'Book not present in User\'s favourite list'
+        message: 'Book not present in User\'s favourite list. Nothing to remove'
       });
     }
     await Userfav.remove(userId, bookId);
     return res.send({
       data: {},
       message: 'Book removed from User\'s favourite list'
+    });
+  } catch (e) {
+    return res.status(500).send({
+      data: {},
+      message: 'Something went wrong, please try again later'
+    });
+  }
+}
+
+async function getRead(req, res) {
+  try {
+    const userId = req.decodedToken.userId;
+    const favs =  await UserRead.getAll(userId);
+    return res.send({
+      data: favs,
+      message: 'Got user\'s read books'
+    });
+  } catch (e) {
+    return res.status(500).send({
+      data: {},
+      message: 'Something went wrong, please try again later'
+    });    
+  }
+}
+
+async function addToRead(req, res) {
+  try {
+    const { bookId } = req.params;
+    const userId = req.decodedToken.userId;
+    const favourite = await UserRead.get(userId, bookId);
+    if (favourite) {
+      return res.status(409).send({
+        data: {},
+        message: 'Book already read by user'
+      });
+    }
+    await UserRead.add(userId, bookId);
+    return res.send({
+      data: {},
+      message: 'Book added to User\'s read list'
     });
   } catch (e) {
     return res.status(500).send({
