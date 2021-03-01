@@ -34,7 +34,7 @@ async function get(bookId) {
       b.bookId = parseInt(b.bookId);
       b.chapters = b.chapters.split(',');
     });
-    return books;
+    return books[0];
   } catch (e) {
     throw e;
   }
