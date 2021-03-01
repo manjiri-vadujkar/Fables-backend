@@ -55,7 +55,6 @@ async function getBook(req, res) {
       message: 'Got book'
     });    
   } catch (e) {
-    console.log(e)
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
