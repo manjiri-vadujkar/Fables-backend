@@ -1,7 +1,8 @@
-const { getById } = require("../models/User.model");
+const { getById, update } = require("../models/User.model");
 
 module.exports = {
-  getUserDetails
+  getUserDetails,
+  subscribe
 };
 
 async function getUserDetails(req, res) {
@@ -23,4 +24,19 @@ async function getUserDetails(req, res) {
       message: 'Failed to get user'
     });
   } 
+}
+
+async function subscribe(req, res) {
+  try {
+    await update([{ key: 'subscription', value: true }], req.decodedToken.userId);
+    return res.send({
+      data: {},
+      message: 'Subscribed'
+    });
+  } catch (e) {
+    return res.status(500).send({
+      data: {},
+      message: 'Failed to subscribe'
+    });    
+  }
 }
