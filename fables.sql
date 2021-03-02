@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2021 at 07:03 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Generation Time: Mar 02, 2021 at 03:43 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -44,8 +43,8 @@ CREATE TABLE `book` (
 INSERT INTO `book` (`bookId`, `bookname`, `genre`, `author`, `summary`, `type`) VALUES
 ('1', 'Adventures of Pinocchio ', 'Children', 'Carlo Collodi', 'The Adventures of Pinocchio is a novel for children by Italian author Carlo Collodi (here transl. by Carol della Chiesa). The first half was published in serial form between 1881 and 1883, and then completed as a book for children in February 1883. It is about the mischievous adventures of Pinocchio, an animated marionette, and his poor father, a woodcarver named Geppetto. It is considered a classic of children’s literature and has spawned many derivative works of art, such as Disney’s classic 1940 animated movie of the same name, and commonplace ideas, such as a liar’s long nose.', 0),
 ('10', 'Dracula', 'Horror', 'Bram Stoker', 'The classic vampire story by Bram Stoker revolves around a struggle between good and evil, tradition and modernity, and lust versus chastity. The author didn’t invent vampires, but his novel has so captured the public’s imagination that he is rightly considered their popularizer. Listen and you will meet not only the Count himself, but heroes Jonathan Harker and Abraham Van Helsing, plus an array of madmen, psychiatrists, and fair maidens who cross paths with the fanged menace.', 0),
-('2', 'Alice\'s adventures in wonderland', 'Children', 'Lewis Caroll', 'In this children\'s classic, a girl named Alice follows falls down a rabbit-hole into a fantasy realm full of talking creatures. She attends a never-ending tea party and plays croquet at the court of the anthropomorphic playing cards.', 0),
-('3', 'Adventures of Sherlock Holmes', 'Crime & Mystery\r\n', 'Sir Arthur Conon Doyle', 'The Adventures of Sherlock Holmes is a collection of twelve stories by Arthur Conan Doyle, featuring his famous detective. They were originally published in the Strand Magazine from July 1891 to June 1892. The title character was named after famous American poet Oliver Wendell Holmes, Sr.', 0),
+('2', 'Alice\'s Adventures in Wonderland', 'Children', 'Lewis Caroll', 'In this children\'s classic, a girl named Alice follows falls down a rabbit-hole into a fantasy realm full of talking creatures. She attends a never-ending tea party and plays croquet at the court of the anthropomorphic playing cards.', 0),
+('3', 'Adventures of Sherlock Holmes', 'Crime & Mystery', 'Sir Arthur Conon Doyle', 'The Adventures of Sherlock Holmes is a collection of twelve stories by Arthur Conan Doyle, featuring his famous detective. They were originally published in the Strand Magazine from July 1891 to June 1892. The title character was named after famous American poet Oliver Wendell Holmes, Sr.', 0),
 ('4', 'The Breaking Point', 'Crime & Mystery', 'Mary Roberts Rinehart', 'Mary Roberts Rinehart -- \"America\'s Agatha Christie,\" as she used to be called -- set this story in a New York suburban town, shortly after the end of the first world war. Dick Livingstone is a young, successful doctor, who in the course of events becomes engaged to Elizabeth Wheeler. But there is a mystery about his past, and he thinks himself honor-bound to unravel it before giving himself to her in marriage. In particular, a shock of undetermined origin has wiped out his memory prior to roughly the last decade. Rinehart, who presumably had been reading, or reading about, the then popular Sigmund Freud, plays on what today is called \"repressed memory,\" as she takes Dick into his past, and into the dangers that, unknown to him, lurk there. Is she correct about the behavior of memory? Who knows? After all, this is not a clinical treatise, but a work of fiction, one of the thrillers that made her such a popular writer of the earlier twentieth century.', 0),
 ('5', 'The Man Who Would Be King', 'Adventure', 'Rudyard Kipling', 'The Man Who Would Be King tells the story of two British adventurers in British India who become kings of Kafiristan, a remote part of Afghanistan. It was inspired by the exploits of James Brooke, an Englishman who became the \"white Raja\" of Sarawak in Borneo, and by the travels of American adventurer Josiah Harlan, who claimed the title Prince of Ghor.', 0),
 ('6', 'The Son of Tarzan', 'Adventure', 'Edgar Rice Burroughs', 'Alexis Paulvitch, a henchman of Tarzan\'s now-deceased enemy, Nikolas Rokoff, survived his encounter with Tarzan in the third novel and wants to even the score. ', 0),
