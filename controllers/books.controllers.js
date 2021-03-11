@@ -68,6 +68,7 @@ async function getBookChapter(req, res) {
     const bookName = await getName(bookId);
     const s3Url = `${bookId}-${bookName.trim()}/${chptName}.txt`;
     const signedUrl = await getSignedUrl(s3Url);
+    console.log(signedUrl);
     const response = await fetch(signedUrl);
     const data = await response.text();
     if (response.status !== 200) {
