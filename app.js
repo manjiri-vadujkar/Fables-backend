@@ -15,7 +15,12 @@ createDbPool();
 
 const app = express();
 
-app.use(logger('dev'));
+// You can set logger to log differently depending on your environment
+if (app.get('env') == 'production') {
+  app.use(logger('common'));
+} else {
+  app.use(logger('dev'));
+}
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
