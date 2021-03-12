@@ -37,6 +37,7 @@ async function login(req, res) {
     });
   }
   catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -60,6 +61,7 @@ async function register(req, res) {
       message: 'User successfully registered'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'

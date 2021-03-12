@@ -19,6 +19,7 @@ async function getUserDetails(req, res) {
       message: 'User found'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Failed to get user'
@@ -34,6 +35,7 @@ async function subscribe(req, res) {
       message: 'Subscribed'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Failed to subscribe'
