@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { getAll, get, getName } = require('../models/Book.model');
 const UserFav = require('../models/Userfav.model');
 const UserRead = require('../models/Userread.model');
+const BookRating = require('../models/Bookrating.model');
 const { getSignedUrl } = require('../common/s3');
 
 module.exports = {
@@ -12,7 +13,8 @@ module.exports = {
   addToFav,
   removeFromFav,
   getRead,
-  addToRead
+  addToRead,
+  addReview
 };
 
 async function getBooks(req, res) {
@@ -24,6 +26,7 @@ async function getBooks(req, res) {
       message: 'Got books'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -55,6 +58,7 @@ async function getBook(req, res) {
       message: 'Got book'
     });    
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -82,6 +86,7 @@ async function getBookChapter(req, res) {
       message: 'Got chapter'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -98,6 +103,7 @@ async function getFavs(req, res) {
       message: 'Got user\'s favourite book list'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -122,6 +128,7 @@ async function addToFav(req, res) {
       message: 'Book added to User\'s favourite list'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -146,6 +153,7 @@ async function removeFromFav(req, res) {
       message: 'Book removed from User\'s favourite list'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -162,6 +170,7 @@ async function getRead(req, res) {
       message: 'Got user\'s read books'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
@@ -186,9 +195,31 @@ async function addToRead(req, res) {
       message: 'Book added to User\'s read list'
     });
   } catch (e) {
+    console.error(e);
     return res.status(500).send({
       data: {},
       message: 'Something went wrong, please try again later'
+    });
+  }
+}
+
+async function addReview(req, res) {
+  try {
+    const { bookId } = req.params;
+    const { rating } = req.query;
+    console.log(bookId);
+    console.log(rating);
+    //const userId = req.decodedToken.userId;
+    await BookRating.addBookReview(bookId, rating);
+    return res.send({
+      data: {},
+      message: "Rating added"
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send({
+      data: {},
+      message: "Something went wrong, please try again later"
     });
   }
 }
